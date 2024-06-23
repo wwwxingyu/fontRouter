@@ -4,7 +4,7 @@ import HomeView from '../views/HomeView.vue'
 
 Vue.use(VueRouter)
 
-const routes = [
+const initRoutes = [
   {
     path: '/',
     name: 'home',
@@ -13,17 +13,21 @@ const routes = [
   {
     path: '/about',
     name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
   }
 ]
-
 const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
-  routes
+  routes: initRoutes
 })
+
+export function resetRouter () { //清空路由的方法
+  const newRouter = new VueRouter({
+    routes: initRoutes
+  }  
+  )
+  router.matcher = newRouter.matcher 
+}
 
 export default router
